@@ -1,0 +1,112 @@
+---
+import "../styles/global.css";
+
+interface Props {
+  title: string;
+  description: string;
+  type?: "website" | "article";
+  publishedAt?: Date;
+  updatedAt?: Date;
+  keywords?: string[];
+}
+
+const {
+  title,
+  description,
+  type = "website",
+  publishedAt,
+  updatedAt,
+  keywords = []
+} = Astro.props;
+
+const siteName = "SOMA Salud";
+const pageTitle = title === siteName ? title : `${title} | ${siteName}`;
+const canonical = new URL(Astro.url.pathname, Astro.site);
+const schema = type === "article"
+  ? {
+      "@context": "https://schema.org",
+      "@type": "MedicalWebPage",
+      headline: title,
+      description,
+      datePublished: publishedAt?.toISOString(),
+      dateModified: (updatedAt ?? publishedAt)?.toISOString(),
+      author: { "@type": "Organization", name: "SOMA" },
+      publisher: { "@type": "Organization", name: "SOMA", url: "https://www.somahealth.com.mx" },
+      mainEntityOfPage: canonical.href,
+      inLanguage: "es-MX"
+    }
+  : {
+      "@context": "https://schema.org",
+      "@type": "Blog",
+      name: "SOMA Salud",
+      description,
+      url: canonical.href,
+      inLanguage: "es-MX",
+      publisher: { "@type": "Organization", name: "SOMA", url: "https://www.somahealth.com.mx" }
+    };
+---
+
+<!doctype html>
+<html lang="es-MX">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{pageTitle}</title>
+    <meta name="description" content={description} />
+    {keywords.length > 0 && <meta name="keywords" content={keywords.join(", ")} />}
+    <link rel="canonical" href={canonical} />
+    <meta name="robots" content="index, follow, max-image-preview:large" />
+    <meta property="og:locale" content="es_MX" />
+    <meta property="og:type" content={type} />
+    <meta property="og:site_name" content={siteName} />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={pageTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta name="theme-color" content="#135650" />
+    <script type="application/ld+json" set:html={JSON.stringify(schema)} />
+  </head>
+  <body>
+    <header class="site-header shell glass">
+      <a class="brand" href="/blog" aria-label="SOMA Salud, inicio">
+        <span class="brand-mark" aria-hidden="true">⌁</span>
+        <span><strong>SOMA</strong><small>Salud y práctica clínica</small></span>
+      </a>
+      <nav aria-label="Navegación principal">
+        <a href="/blog">Artículos</a>
+        <a href="https://www.somahealth.com.mx">Conoce SOMA</a>
+      </nav>
+    </header>
+    <main><slot /></main>
+    <footer class="site-footer shell">
+      <div>
+        <strong>SOMA</strong>
+        <p>Información clara para profesionales de la salud en México.</p>
+      </div>
+      <p>El contenido es informativo y no sustituye el criterio médico ni la normativa vigente.</p>
+      <p>© {new Date().getFullYear()} SOMA</p>
+    </footer>
+  </body>
+</html>
+
+<style>
+  .site-header { margin-top: 16px; padding: 10px 16px; border-radius: 999px; display: flex; align-items: center; justify-content: space-between; position: relative; z-index: 2; }
+  .brand { display: flex; align-items: center; gap: 10px; text-decoration: none; line-height: 1.05; }
+  .brand-mark { width: 38px; height: 38px; border-radius: 12px; display: grid; place-items: center; background: var(--brand); color: white; font-size: 1.35rem; }
+  .brand strong { display: block; letter-spacing: .04em; }
+  .brand small { color: var(--muted); font-size: .7rem; }
+  nav { display: flex; gap: 10px; align-items: center; }
+  nav a { padding: 9px 13px; border-radius: 999px; color: var(--muted); font-weight: 650; text-decoration: none; }
+  nav a:hover { background: rgba(19,86,80,.08); color: var(--brand); }
+  .site-footer { display: grid; grid-template-columns: 1.2fr 1.6fr auto; gap: 28px; padding: 42px 12px; margin-top: 48px; border-top: 1px solid var(--line); color: var(--muted); font-size: .88rem; }
+  .site-footer p { margin: .25rem 0 0; }
+  @media (max-width: 720px) {
+    .site-header { border-radius: 22px; }
+    nav a:first-child { display: none; }
+    nav a { font-size: .82rem; padding-inline: 8px; }
+    .site-footer { grid-template-columns: 1fr; gap: 12px; }
+  }
+</style>

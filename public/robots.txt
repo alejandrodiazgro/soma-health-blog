@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://www.somahealth.com.mx/blog/sitemap-index.xml
