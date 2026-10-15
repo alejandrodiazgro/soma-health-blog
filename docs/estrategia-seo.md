@@ -138,6 +138,9 @@ Crear páginas sólo cuando exista contenido y experiencia suficiente para cada 
 - `/blog/gestion-consultorio/`
 - `/blog/inteligencia-artificial-medica/`
 - `/blog/normativa/`
+- `/blog/iniciar-consulta-privada/`
+
+El pilar **iniciar consulta privada** cubre el recorrido de médicos generales recién egresados y especialistas: planeación, requisitos sanitarios, infraestructura, impuestos, documentación, captación ética de pacientes y operación. Su mapa detallado se encuentra en [`cluster-consulta-privada.md`](./cluster-consulta-privada.md).
 
 Cada página pilar debe enlazar a artículos más específicos y éstos deben regresar a la página pilar. Los enlaces hacia el producto deben aparecer únicamente cuando resuelvan el siguiente paso del lector.
 
