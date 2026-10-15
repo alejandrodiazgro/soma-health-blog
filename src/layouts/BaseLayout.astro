@@ -22,12 +22,14 @@ const {
 const siteName = "SOMA Salud";
 const pageTitle = title === siteName ? title : `${title} | ${siteName}`;
 const canonical = new URL(Astro.url.pathname, Astro.site);
+const socialImage = new URL("/blog/og-default.svg", Astro.site);
 const schema = type === "article"
   ? {
       "@context": "https://schema.org",
-      "@type": "MedicalWebPage",
+      "@type": ["BlogPosting", "MedicalWebPage"],
       headline: title,
       description,
+      image: socialImage.href,
       datePublished: publishedAt?.toISOString(),
       dateModified: (updatedAt ?? publishedAt)?.toISOString(),
       author: { "@type": "Organization", name: "SOMA" },
@@ -63,9 +65,12 @@ const schema = type === "article"
     <meta property="og:title" content={pageTitle} />
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={socialImage} />
+    <meta property="og:image:alt" content="SOMA Salud — Medicina, tecnología y práctica clínica" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={pageTitle} />
     <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={socialImage} />
     <meta name="theme-color" content="#135650" />
     <script type="application/ld+json" set:html={JSON.stringify(schema)} />
   </head>

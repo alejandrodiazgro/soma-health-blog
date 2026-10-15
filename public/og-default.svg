@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-labelledby="title desc">
+  <title id="title">SOMA Salud</title>
+  <desc id="desc">Medicina, tecnología y práctica clínica</desc>
+  <defs>
+    <radialGradient id="bg" cx="0" cy="0" r="1" gradientTransform="translate(130 40) rotate(31) scale(1100 730)" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#58B580" stop-opacity=".58"/>
+      <stop offset=".52" stop-color="#E6EFEE"/>
+      <stop offset="1" stop-color="#C7DBE8"/>
+    </radialGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="160%">
+      <feDropShadow dx="0" dy="24" stdDeviation="30" flood-color="#102830" flood-opacity=".16"/>
+    </filter>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <rect x="54" y="48" width="1092" height="534" rx="42" fill="white" fill-opacity=".62" stroke="white" stroke-opacity=".88" filter="url(#shadow)"/>
+  <rect x="104" y="98" width="76" height="76" rx="22" fill="#135650"/>
+  <path d="M124 137h11l7-14 12 29 8-15h14" fill="none" stroke="white" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+  <text x="204" y="133" fill="#142030" font-family="Arial, sans-serif" font-size="40" font-weight="700" letter-spacing="2">SOMA</text>
+  <text x="204" y="165" fill="#4B5B66" font-family="Arial, sans-serif" font-size="20">Salud y práctica clínica</text>
+  <text x="104" y="318" fill="#142030" font-family="Arial, sans-serif" font-size="68" font-weight="700">Medicina, tecnología</text>
+  <text x="104" y="398" fill="#142030" font-family="Arial, sans-serif" font-size="68" font-weight="700">y una mejor consulta.</text>
+  <text x="104" y="485" fill="#135650" font-family="Arial, sans-serif" font-size="26" font-weight="700">somahealth.com.mx/blog</text>
+</svg>
