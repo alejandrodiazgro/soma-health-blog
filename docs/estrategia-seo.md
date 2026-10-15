@@ -6,6 +6,45 @@ Profesionales de la salud en México que tienen un consultorio privado o trabaja
 
 La prioridad inicial no son búsquedas de pacientes sobre enfermedades. Es preferible construir autoridad alrededor de la operación clínica y la salud digital, donde SOMA cuenta con experiencia directa y una relación clara con el producto.
 
+## Territorio que SOMA debe ocupar
+
+**Operación de la consulta privada en México:** ayudar a un médico a abrir, regularizar, administrar y digitalizar su consultorio desde el primer paciente.
+
+Doctoralia tiene una ventaja difícil de replicar en búsquedas de pacientes como `cardiólogo en Monterrey`: combina perfiles, ubicaciones, disponibilidad, reseñas y agendamiento. SOMA debe priorizar las búsquedas que ocurren antes y durante la operación del consultorio, donde el producto puede ser el siguiente paso natural.
+
+Eleonor y otros sistemas compiten por términos de producto como `expediente clínico electrónico`. Para diferenciarnos, cada página comercial debe estar respaldada por contenido práctico: procesos, listas de verificación, ejemplos, normativa mexicana y criterios transparentes de compra.
+
+El análisis completo está en [`analisis-competidores-seo.md`](./analisis-competidores-seo.md).
+
+## Lista priorizada de palabras clave
+
+Estas prioridades son cualitativas y combinan cercanía con el producto, intención de contratación y oportunidad editorial. No representan volumen de búsqueda medido.
+
+| Prioridad | Palabra clave principal | Intención | Página objetivo |
+| --- | --- | --- | --- |
+| 1 | `software para consultorio médico` | Comercial | Landing pilar |
+| 2 | `expediente clínico electrónico` | Comercial/informativa | Landing pilar + guía |
+| 3 | `software médico México` | Comercial | Landing comercial |
+| 4 | `receta médica electrónica` | Comercial/informativa | Landing + guía |
+| 5 | `agenda médica digital` | Comercial | Landing + guía |
+| 6 | `requisitos para abrir un consultorio médico` | Informativa | Guía pilar |
+| 7 | `cómo iniciar consulta privada en México` | Informativa | Guía pilar |
+| 8 | `aviso de funcionamiento COFEPRIS consultorio médico` | Informativa | Artículo regulatorio |
+| 9 | `NOM-004 expediente clínico` | Informativa/comercial | Guía normativa |
+| 10 | `qué debe contener un expediente clínico` | Informativa | Artículo práctico |
+| 11 | `nota SOAP ejemplo` | Informativa | Plantilla explicada |
+| 12 | `nota médica por voz` | Comercial | Caso de uso SOMA |
+| 13 | `inteligencia artificial para médicos` | Informativa/comercial | Página pilar |
+| 14 | `cómo conseguir pacientes consulta privada` | Informativa | Guía de crecimiento |
+| 15 | `régimen fiscal médicos independientes` | Informativa | Guía revisada por contador |
+| 16 | `cuánto cuesta abrir un consultorio médico` | Comercial/informativa | Presupuesto descargable |
+| 17 | `mejor software expediente clínico México` | Comercial | Comparativa verificable |
+| 18 | `precio software médico` | Comercial | Guía de precios |
+| 19 | `alternativa a Doctoralia para médicos` | Comercial | Comparativa de casos de uso |
+| 20 | `alternativa a Eleonor expediente clínico` | Comercial | Comparativa de producto |
+
+Las páginas comparativas deben declarar que SOMA es parte interesada, fechar la revisión y comprobar cada precio o función en la fuente del proveedor. No deben presentar a Doctoralia y SOMA como equivalentes: Doctoralia destaca en descubrimiento y agendamiento; SOMA debe explicar con claridad su propuesta en documentación y operación clínica.
+
 ## Grupos de palabras clave
 
 ### 1. Software para consultorios — intención comercial alta
