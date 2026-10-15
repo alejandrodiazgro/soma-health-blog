@@ -22,8 +22,35 @@ const posts = (await getCollection("blog", ({ data }) => !data.draft))
       <span>01</span><p>Expediente clínico y normativa</p>
       <span>02</span><p>Receta electrónica</p>
       <span>03</span><p>Gestión del consultorio</p>
-      <span>04</span><p>IA aplicada a la salud</p>
+      <span>04</span><p>Iniciar consulta privada</p>
+      <span>05</span><p>IA aplicada a la salud</p>
     </aside>
+  </section>
+
+  <section class="practice shell">
+    <header>
+      <p class="eyebrow">Construye tu práctica</p>
+      <h2>De la formación al primer paciente.</h2>
+      <p>Rutas claras para comenzar una consulta privada con orden clínico, operativo y administrativo.</p>
+    </header>
+    <div class="practice-grid">
+      <a class="practice-card glass" href="/blog/consulta-privada-medico-recien-egresado">
+        <span>01</span><strong>Médico recién egresado</strong>
+        <p>Alcance profesional, primer consultorio, precios y flujo del primer paciente.</p>
+      </a>
+      <a class="practice-card glass" href="/blog/iniciar-consulta-privada-especialista">
+        <span>02</span><strong>Especialista</strong>
+        <p>Servicios, procedimientos, referencias y crecimiento después de la residencia.</p>
+      </a>
+      <a class="practice-card glass" href="/blog/requisitos-cofepris-consultorio-medico">
+        <span>03</span><strong>Requisitos del consultorio</strong>
+        <p>COFEPRIS, infraestructura, responsable sanitario, RPBI y publicidad.</p>
+      </a>
+      <a class="practice-card primary" href="/blog/como-iniciar-consulta-privada-mexico">
+        <span>Guía completa</span><strong>Inicia tu consulta privada</strong>
+        <p>El recorrido paso a paso para abrir y operar tu práctica en México.</p>
+      </a>
+    </div>
   </section>
 
   <section class="articles shell" id="articulos">
@@ -59,6 +86,19 @@ const posts = (await getCollection("blog", ({ data }) => !data.draft))
   .hero-note span { color: var(--brand); font-size: .72rem; font-weight: 800; padding-top: 17px; }
   .hero-note p { border-bottom: 1px solid var(--line); margin: 0; padding: 12px 0; font-weight: 700; }
   .articles { padding-block: 34px; }
+  .practice { padding-block: 32px 80px; }
+  .practice > header { max-width: 760px; margin-bottom: 28px; }
+  .practice h2 { margin: 7px 0 12px; font-size: clamp(2.2rem, 4.5vw, 4.2rem); line-height: 1; letter-spacing: -.04em; }
+  .practice > header > p:last-child { max-width: 620px; color: var(--muted); font-size: 1.05rem; }
+  .practice-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
+  .practice-card { min-height: 240px; padding: 24px; border-radius: 24px; display: flex; flex-direction: column; text-decoration: none; transition: transform .2s ease, box-shadow .2s ease; }
+  .practice-card:hover { transform: translateY(-4px); box-shadow: 0 26px 68px rgba(16,40,48,.17); }
+  .practice-card > span { color: var(--brand); font-size: .72rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; }
+  .practice-card > strong { margin-top: auto; font-size: 1.35rem; line-height: 1.08; }
+  .practice-card > p { margin: 10px 0 0; color: var(--muted); font-size: .88rem; line-height: 1.5; }
+  .practice-card.primary { background: var(--brand); color: white; box-shadow: var(--shadow); }
+  .practice-card.primary > span { color: #bfe7dc; }
+  .practice-card.primary > p { color: rgba(255,255,255,.72); }
   .articles > header { display: flex; align-items: end; justify-content: space-between; gap: 30px; margin-bottom: 30px; }
   .articles h2, .cta h2 { margin: 6px 0 0; font-size: clamp(2rem, 4vw, 3.6rem); line-height: 1.05; letter-spacing: -.035em; }
   .articles > header > p { max-width: 410px; color: var(--muted); }
@@ -70,5 +110,8 @@ const posts = (await getCollection("blog", ({ data }) => !data.draft))
     .hero-note { transform: none; }
     .articles > header, .cta { align-items: flex-start; flex-direction: column; }
     .article-grid { grid-template-columns: 1fr; }
+    .practice-grid { grid-template-columns: 1fr; }
+    .practice-card { min-height: 210px; }
   }
+  @media (min-width: 801px) and (max-width: 1100px) { .practice-grid { grid-template-columns: repeat(2, 1fr); } }
 </style>

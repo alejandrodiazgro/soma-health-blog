@@ -1,7 +1,7 @@
 ---
 title: "Receta médica electrónica: ventajas y elementos esenciales"
 description: "Qué es una receta médica electrónica, qué información debe contener y cómo puede mejorar el seguimiento dentro de un consultorio."
-publishedAt: 2026-10-12
+publishedAt: 2026-10-14T12:00:00-07:00
 author: "Equipo SOMA"
 category: "Receta electrónica"
 keywords:

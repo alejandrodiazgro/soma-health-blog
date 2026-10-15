@@ -1,7 +1,7 @@
 ---
 title: "Expediente clínico electrónico en México: qué es y cómo organizarlo"
 description: "Conoce qué integra un expediente clínico electrónico, sus beneficios para el consultorio y los puntos esenciales para organizar la información del paciente."
-publishedAt: 2026-10-14
+publishedAt: 2026-10-14T12:00:00-07:00
 author: "Equipo SOMA"
 category: "Expediente clínico"
 keywords:
@@ -9,7 +9,7 @@ keywords:
   - "expediente médico digital"
   - "software para consultorio médico"
   - "historia clínica digital"
-featured: true
+featured: false
 ---
 
 ## ¿Qué es un expediente clínico electrónico?

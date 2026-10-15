@@ -1,7 +1,7 @@
 ---
 title: "NOM-004 y expediente clínico: guía práctica para el consultorio"
 description: "Una introducción práctica a la NOM-004-SSA3-2012 y a la organización de notas, historia clínica y documentos del expediente clínico."
-publishedAt: 2026-10-13
+publishedAt: 2026-10-14T12:00:00-07:00
 author: "Equipo SOMA"
 category: "Normativa"
 keywords:
