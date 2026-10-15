@@ -20,27 +20,40 @@ const {
 } = Astro.props;
 
 const siteName = "SOMA Salud";
-const pageTitle = title === siteName ? title : `${title} | ${siteName}`;
+const pageTitle = title === siteName ? "SOMA Salud — Guías para la consulta privada" : `${title} | SOMA`;
+const blogRoot = import.meta.env.BASE_URL.replace(/\/$/, "") || "/";
 const canonical = new URL(Astro.url.pathname, Astro.site);
-const socialImage = new URL("/blog/og-default.svg", Astro.site);
+const socialImage = new URL(`${blogRoot}/og-default.svg`, Astro.site);
+const homeUrl = new URL(`${blogRoot}/`, Astro.site);
 const schema = type === "article"
   ? {
       "@context": "https://schema.org",
-      "@type": ["BlogPosting", "MedicalWebPage"],
-      headline: title,
-      description,
-      image: socialImage.href,
-      datePublished: publishedAt?.toISOString(),
-      dateModified: (updatedAt ?? publishedAt)?.toISOString(),
-      author: { "@type": "Organization", name: "SOMA" },
-      publisher: { "@type": "Organization", name: "SOMA", url: "https://www.somahealth.com.mx" },
-      mainEntityOfPage: canonical.href,
-      inLanguage: "es-MX"
+      "@graph": [
+        {
+          "@type": ["BlogPosting", "MedicalWebPage"],
+          headline: title,
+          description,
+          image: socialImage.href,
+          datePublished: publishedAt?.toISOString(),
+          dateModified: (updatedAt ?? publishedAt)?.toISOString(),
+          author: { "@type": "Organization", name: "Equipo editorial SOMA" },
+          publisher: { "@type": "Organization", name: "SOMA", url: "https://www.somahealth.com.mx" },
+          mainEntityOfPage: canonical.href,
+          inLanguage: "es-MX"
+        },
+        {
+          "@type": "BreadcrumbList",
+          itemListElement: [
+            { "@type": "ListItem", position: 1, name: "Blog SOMA", item: homeUrl.href },
+            { "@type": "ListItem", position: 2, name: title, item: canonical.href }
+          ]
+        }
+      ]
     }
   : {
       "@context": "https://schema.org",
       "@type": "Blog",
-      name: "SOMA Salud",
+      name: siteName,
       description,
       url: canonical.href,
       inLanguage: "es-MX",
@@ -52,9 +65,9 @@ const schema = type === "article"
 <html lang="es-MX">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="generator" content={Astro.generator} />
-    <link rel="icon" type="image/svg+xml" href="/blog/favicon.svg" />
+    <link rel="icon" type="image/svg+xml" href={`${blogRoot}/favicon.svg`} />
     <title>{pageTitle}</title>
     <meta name="description" content={description} />
     {keywords.length > 0 && <meta name="keywords" content={keywords.join(", ")} />}
@@ -67,7 +80,7 @@ const schema = type === "article"
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
     <meta property="og:image" content={socialImage} />
-    <meta property="og:image:alt" content="SOMA Salud — Medicina, tecnología y práctica clínica" />
+    <meta property="og:image:alt" content="SOMA — Guías para una consulta médica mejor organizada" />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={pageTitle} />
     <meta name="twitter:description" content={description} />
@@ -76,43 +89,58 @@ const schema = type === "article"
     <script type="application/ld+json" set:html={JSON.stringify(schema)} />
   </head>
   <body>
+    <a class="skip" href="#contenido">Saltar al contenido</a>
     <header class="site-header shell glass">
-      <a class="brand" href="/blog" aria-label="SOMA Salud, inicio">
-        <span class="brand-mark" aria-hidden="true">⌁</span>
-        <span><strong>SOMA</strong><small>Salud y práctica clínica</small></span>
+      <a class="brand" href={`${blogRoot}/`} aria-label="SOMA, inicio del blog">
+        <span class="monogram" aria-hidden="true">
+          <svg viewBox="0 0 32 32"><path d="M5 17h5l3-6 4 11 3-5h7"></path></svg>
+        </span>
+        <span><strong>SOMA</strong><small>Expediente médico</small></span>
       </a>
-      <nav aria-label="Navegación principal">
-        <a href="/blog">Artículos</a>
-        <a href="https://www.somahealth.com.mx">Conoce SOMA</a>
+      <nav class="primary-nav" aria-label="Navegación principal">
+        <a class="active" href={`${blogRoot}/`}>Guías</a>
+        <a href={`${blogRoot}/#rutas`}>Consulta privada</a>
+        <a href={`${blogRoot}/#articulos`}>Biblioteca</a>
       </nav>
+      <a class="header-cta" href="https://www.somahealth.com.mx">Ir a SOMA <span aria-hidden="true">↗</span></a>
     </header>
-    <main><slot /></main>
+    <main id="contenido"><slot /></main>
     <footer class="site-footer shell">
-      <div>
-        <strong>SOMA</strong>
-        <p>Información clara para profesionales de la salud en México.</p>
+      <div class="footer-brand">
+        <span class="monogram" aria-hidden="true"><svg viewBox="0 0 32 32"><path d="M5 17h5l3-6 4 11 3-5h7"></path></svg></span>
+        <div><strong>SOMA</strong><p>Salud, tecnología y práctica clínica.</p></div>
       </div>
-      <p>El contenido es informativo y no sustituye el criterio médico ni la normativa vigente.</p>
-      <p>© {new Date().getFullYear()} SOMA</p>
+      <p class="disclaimer">Contenido informativo para profesionales de la salud en México. No sustituye el criterio médico ni asesoría regulatoria, legal o fiscal.</p>
+      <div class="footer-links"><a href={`${blogRoot}/`}>Blog</a><a href="https://www.somahealth.com.mx">Producto</a><span>© {new Date().getFullYear()}</span></div>
     </footer>
   </body>
 </html>
 
 <style>
-  .site-header { margin-top: 16px; padding: 10px 16px; border-radius: 999px; display: flex; align-items: center; justify-content: space-between; position: relative; z-index: 2; }
+  .skip { position: fixed; top: 10px; left: 10px; z-index: 20; padding: 10px 14px; border-radius: 10px; background: white; color: var(--brand); font-weight: 700; transform: translateY(-160%); }
+  .skip:focus { transform: translateY(0); }
+  .site-header { position: sticky; top: 12px; z-index: 10; display: grid; grid-template-columns: auto 1fr auto; align-items: center; min-height: 60px; margin-top: 12px; padding: 5px 10px 5px 18px; border-radius: 999px; }
   .brand { display: flex; align-items: center; gap: 10px; text-decoration: none; line-height: 1.05; }
-  .brand-mark { width: 38px; height: 38px; border-radius: 12px; display: grid; place-items: center; background: var(--brand); color: white; font-size: 1.35rem; }
-  .brand strong { display: block; letter-spacing: .04em; }
-  .brand small { color: var(--muted); font-size: .7rem; }
-  nav { display: flex; gap: 10px; align-items: center; }
-  nav a { padding: 9px 13px; border-radius: 999px; color: var(--muted); font-weight: 650; text-decoration: none; }
-  nav a:hover { background: rgba(19,86,80,.08); color: var(--brand); }
-  .site-footer { display: grid; grid-template-columns: 1.2fr 1.6fr auto; gap: 28px; padding: 42px 12px; margin-top: 48px; border-top: 1px solid var(--line); color: var(--muted); font-size: .88rem; }
-  .site-footer p { margin: .25rem 0 0; }
-  @media (max-width: 720px) {
-    .site-header { border-radius: 22px; }
-    nav a:first-child { display: none; }
-    nav a { font-size: .82rem; padding-inline: 8px; }
-    .site-footer { grid-template-columns: 1fr; gap: 12px; }
+  .monogram { display: grid; place-items: center; width: 34px; height: 34px; flex: 0 0 auto; border-radius: 10px; background: var(--brand); box-shadow: inset 0 1px 0 rgba(255,255,255,.35); color: white; }
+  .monogram svg { width: 25px; height: 25px; fill: none; stroke: currentColor; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
+  .brand strong, .footer-brand strong { display: block; font-family: Montserrat, Geist, sans-serif; font-size: 18px; font-weight: 800; letter-spacing: -.02em; }
+  .brand small { display: block; margin-top: 2px; color: var(--muted); font-size: 11px; }
+  .primary-nav { justify-self: center; display: flex; gap: 4px; padding: 4px; border: 1px solid rgba(255,255,255,.75); border-radius: 999px; background: rgba(255,255,255,.45); }
+  .primary-nav a { min-height: 36px; padding: 8px 14px; border-radius: 999px; color: #24343f; font-size: 13px; font-weight: 500; text-decoration: none; }
+  .primary-nav a:hover, .primary-nav a.active { background: #fff; box-shadow: 0 3px 10px rgba(16,40,48,.1); color: var(--brand); }
+  .header-cta { display: inline-flex; align-items: center; min-height: 40px; padding: 0 16px; border-radius: 999px; background: var(--brand); box-shadow: inset 0 1px 0 rgba(255,255,255,.25), 0 6px 16px rgba(19,86,80,.2); color: white; font-size: 13px; font-weight: 600; text-decoration: none; }
+  .site-footer { display: grid; grid-template-columns: 1fr 1.35fr auto; align-items: start; gap: 34px; padding: 46px 12px; margin-top: 70px; border-top: 1px solid var(--line); color: var(--muted); font-size: 13px; }
+  .footer-brand { display: flex; align-items: center; gap: 10px; color: var(--text); }
+  .footer-brand p, .disclaimer { margin: 3px 0 0; }
+  .footer-links { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 14px; }
+  .footer-links a { color: var(--brand); font-weight: 600; text-decoration: none; }
+  @media (max-width: 820px) {
+    .site-header { grid-template-columns: 1fr auto; top: 8px; margin-top: 8px; padding-left: 12px; border-radius: 22px; }
+    .primary-nav { display: none; }
+    .brand strong { font-size: 16px; }
+    .brand small { display: none; }
+    .header-cta { min-height: 42px; padding-inline: 14px; }
+    .site-footer { grid-template-columns: 1fr; gap: 18px; }
+    .footer-links { justify-content: flex-start; }
   }
 </style>

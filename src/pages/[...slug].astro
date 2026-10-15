@@ -9,7 +9,16 @@ export async function getStaticPaths() {
 
 const { post } = Astro.props;
 const { Content, headings } = await render(post);
-const date = new Intl.DateTimeFormat("es-MX", { day: "numeric", month: "long", year: "numeric" }).format(post.data.publishedAt);
+const formatDate = (value: Date) => new Intl.DateTimeFormat("es-MX", { day: "numeric", month: "long", year: "numeric" }).format(value);
+const date = formatDate(post.data.publishedAt);
+const updated = post.data.updatedAt ? formatDate(post.data.updatedAt) : null;
+const minutes = Math.max(3, Math.ceil((post.body?.split(/\s+/).length ?? 700) / 210));
+const blogRoot = import.meta.env.BASE_URL.replace(/\/$/, "") || "/";
+const allPosts = await getCollection("blog", ({ data }) => !data.draft);
+const relatedPosts = allPosts
+  .filter((entry) => entry.id !== post.id)
+  .sort((a, b) => Number(b.data.category === post.data.category) - Number(a.data.category === post.data.category))
+  .slice(0, 3);
 ---
 <BaseLayout
   title={post.data.title}
@@ -20,43 +29,106 @@ const date = new Intl.DateTimeFormat("es-MX", { day: "numeric", month: "long", y
   keywords={post.data.keywords}
 >
   <article class="article shell">
-    <header>
-      <a class="back" href="/blog">← Todos los artículos</a>
+    <header class="article-hero">
+      <nav class="breadcrumb" aria-label="Migas de pan"><a href={`${blogRoot}/`}>Blog SOMA</a><span aria-hidden="true">/</span><span>{post.data.category}</span></nav>
       <p class="eyebrow">{post.data.category}</p>
       <h1>{post.data.title}</h1>
       <p class="dek">{post.data.description}</p>
-      <div class="byline"><span>{post.data.author}</span><time datetime={post.data.publishedAt.toISOString()}>{date}</time></div>
+      <div class="byline">
+        <span class="author-mark" aria-hidden="true"><svg viewBox="0 0 32 32"><path d="M5 17h5l3-6 4 11 3-5h7"></path></svg></span>
+        <div><strong>{post.data.author}</strong><small>Publicado el {date}{updated && ` · Actualizado el ${updated}`} · {minutes} min de lectura</small></div>
+      </div>
     </header>
     <div class="article-layout">
       <aside class="toc glass">
-        <strong>En este artículo</strong>
+        <p class="toc-label">En esta guía</p>
         <nav aria-label="Contenido del artículo">
           {headings.filter((h) => h.depth === 2).map((heading) => <a href={`#${heading.slug}`}>{heading.text}</a>)}
         </nav>
+        <div class="toc-help"><span aria-hidden="true">i</span><p>Verifica los requisitos vigentes y las condiciones particulares de tu práctica.</p></div>
       </aside>
-      <div class="prose glass"><Content /></div>
+      <div>
+        <div class="prose glass"><Content /></div>
+        <section class="article-cta glass" aria-label="Conoce SOMA">
+          <div><p class="eyebrow">SOMA para tu consulta</p><h2>Convierte esta guía en un proceso organizado.</h2><p>Agenda, expediente y recetas en un mismo espacio para tu práctica.</p></div>
+          <a class="button" href="https://www.somahealth.com.mx">Conocer SOMA <span aria-hidden="true">↗</span></a>
+        </section>
+        <section class="related" aria-labelledby="related-title">
+          <p class="eyebrow">Continúa aprendiendo</p>
+          <h2 id="related-title">Guías relacionadas</h2>
+          <div class="related-grid">
+            {relatedPosts.map((entry) => (
+              <a class="related-card glass" href={`${blogRoot}/${entry.id}`}>
+                <small>{entry.data.category}</small>
+                <strong>{entry.data.title}</strong>
+                <span aria-hidden="true">→</span>
+              </a>
+            ))}
+          </div>
+        </section>
+      </div>
     </div>
   </article>
 </BaseLayout>
 
 <style>
-  .article { padding-block: 70px 30px; }
-  .article > header { max-width: 930px; margin: 0 auto 45px; text-align: center; }
-  .back { display: inline-block; margin-bottom: 34px; color: var(--muted); text-decoration: none; font-weight: 650; }
-  h1 { margin: 14px 0 22px; font-size: clamp(2.5rem, 6vw, 5.3rem); line-height: 1.02; letter-spacing: -.05em; text-wrap: balance; }
-  .dek { max-width: 760px; margin: 0 auto; color: var(--muted); font-size: 1.2rem; }
-  .byline { margin-top: 24px; display: flex; justify-content: center; gap: 18px; color: var(--muted); font-size: .86rem; }
-  .article-layout { display: grid; grid-template-columns: 240px minmax(0, 760px); justify-content: center; gap: 24px; align-items: start; }
-  .toc { position: sticky; top: 24px; border-radius: 20px; padding: 20px; }
-  .toc nav { margin-top: 12px; display: grid; gap: 8px; }
-  .toc a { color: var(--muted); font-size: .86rem; line-height: 1.35; text-decoration: none; }
-  .toc a:hover { color: var(--brand); }
-  .prose { border-radius: 28px; padding: clamp(25px, 5vw, 58px); font-size: 1.05rem; }
-  .prose :global(h2) { margin: 2.4em 0 .7em; font-size: 1.85rem; line-height: 1.15; letter-spacing: -.025em; }
+  .article { padding-block: 64px 30px; }
+  .article-hero { max-width: 900px; margin: 0 auto 42px; }
+  .breadcrumb { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 46px; color: var(--muted); font-size: 13px; }
+  .breadcrumb a { color: var(--brand); font-weight: 600; text-decoration: none; }
+  h1 { max-width: 880px; margin: 12px 0 22px; font-size: clamp(42px, 6.4vw, 72px); line-height: 1; letter-spacing: -.052em; text-wrap: balance; }
+  .dek { max-width: 760px; margin: 0; color: var(--muted); font-size: 19px; line-height: 1.6; }
+  .byline { display: flex; align-items: center; gap: 11px; margin-top: 26px; }
+  .author-mark { display: grid; place-items: center; width: 38px; height: 38px; border-radius: 11px; background: var(--brand); color: white; }
+  .author-mark svg { width: 27px; fill: none; stroke: currentColor; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
+  .byline strong, .byline small { display: block; }
+  .byline strong { font-size: 13px; }
+  .byline small { margin-top: 2px; color: var(--muted); font-size: 12px; }
+  .article-layout { display: grid; grid-template-columns: 230px minmax(0, 760px); justify-content: center; gap: 22px; align-items: start; }
+  .toc { position: sticky; top: 92px; padding: 20px; border-radius: 22px; }
+  .toc-label { margin: 0; color: var(--text); font-size: 13px; font-weight: 600; }
+  .toc nav { display: grid; gap: 9px; margin-top: 13px; }
+  .toc nav a { padding-left: 10px; border-left: 1px solid var(--line-strong); color: var(--muted); font-size: 12px; line-height: 1.4; text-decoration: none; }
+  .toc nav a:hover { border-color: var(--brand); color: var(--brand); }
+  .toc-help { display: grid; grid-template-columns: 24px 1fr; gap: 8px; margin-top: 18px; padding-top: 16px; border-top: 1px solid var(--line); }
+  .toc-help > span { display: grid; place-items: center; width: 22px; height: 22px; border-radius: 50%; background: var(--brand-soft); color: var(--brand); font-size: 11px; font-weight: 700; }
+  .toc-help p { margin: 0; color: var(--muted); font-size: 11px; line-height: 1.4; }
+  .prose { padding: clamp(26px, 5vw, 58px); border-radius: 28px; font-size: 17px; }
+  .prose :global(h2) { margin: 2.4em 0 .7em; color: var(--text); font-size: clamp(27px, 3vw, 36px); line-height: 1.12; letter-spacing: -.035em; scroll-margin-top: 105px; }
   .prose :global(h2:first-child) { margin-top: 0; }
-  .prose :global(h3) { margin-top: 1.8em; }
+  .prose :global(h3) { margin: 1.9em 0 .55em; font-size: 21px; scroll-margin-top: 105px; }
   .prose :global(p), .prose :global(li) { color: #334552; }
-  .prose :global(a) { color: var(--brand); font-weight: 650; }
+  .prose :global(ul), .prose :global(ol) { padding-left: 1.3em; }
+  .prose :global(li) { margin-block: .45em; }
+  .prose :global(a) { color: var(--brand); font-weight: 600; text-underline-offset: 3px; }
+  .prose :global(strong) { color: var(--text); }
   .prose :global(blockquote) { margin: 2em 0; padding: 18px 22px; border-left: 4px solid var(--accent); border-radius: 0 14px 14px 0; background: rgba(88,181,128,.1); }
-  @media (max-width: 850px) { .article-layout { grid-template-columns: 1fr; } .toc { position: static; } }
+  .prose :global(blockquote p) { margin: 0; }
+  .prose :global(hr) { border: 0; border-top: 1px solid var(--line); margin: 2.5em 0; }
+  .article-cta { display: flex; align-items: center; justify-content: space-between; gap: 24px; margin-top: 18px; padding: 28px; border-radius: 24px; }
+  .article-cta h2 { max-width: 510px; margin: 4px 0 0; font-size: clamp(25px, 3vw, 34px); }
+  .article-cta p:last-child { margin: 8px 0 0; color: var(--muted); font-size: 14px; }
+  .related { padding-top: 52px; }
+  .related > h2 { margin: 5px 0 20px; font-size: 30px; }
+  .related-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; }
+  .related-card { min-height: 190px; display: flex; flex-direction: column; padding: 19px; border-radius: 20px; text-decoration: none; transition: transform .15s ease, background .15s ease; }
+  .related-card:hover { transform: translateY(-2px); background: rgba(255,255,255,.82); }
+  .related-card small { color: var(--brand); font-size: 10px; font-weight: 600; letter-spacing: .05em; text-transform: uppercase; }
+  .related-card strong { margin-top: auto; font-size: 16px; line-height: 1.25; }
+  .related-card span { margin-top: 12px; color: var(--brand); }
+  @media (max-width: 850px) {
+    .article { padding-top: 48px; }
+    .article-layout { grid-template-columns: 1fr; }
+    .toc { position: static; }
+    .toc-help { display: none; }
+    .article-cta { align-items: flex-start; flex-direction: column; }
+    .related-grid { grid-template-columns: 1fr; }
+    .related-card { min-height: 150px; }
+  }
+  @media (max-width: 520px) {
+    h1 { font-size: 39px; }
+    .dek { font-size: 17px; }
+    .byline small { line-height: 1.4; }
+    .prose { padding: 24px 20px; font-size: 16px; }
+  }
 </style>
