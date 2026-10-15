@@ -22,9 +22,10 @@ const {
 const siteName = "SOMA Salud";
 const pageTitle = title === siteName ? "SOMA Salud — Guías para la consulta privada" : `${title} | SOMA`;
 const blogRoot = import.meta.env.BASE_URL.replace(/\/$/, "") || "/";
+const blogHome = blogRoot === "/" ? "/" : blogRoot;
 const canonical = new URL(Astro.url.pathname, Astro.site);
 const socialImage = new URL(`${blogRoot}/og-default.svg`, Astro.site);
-const homeUrl = new URL(`${blogRoot}/`, Astro.site);
+const homeUrl = new URL(blogHome, Astro.site);
 const schema = type === "article"
   ? {
       "@context": "https://schema.org",
@@ -91,16 +92,16 @@ const schema = type === "article"
   <body>
     <a class="skip" href="#contenido">Saltar al contenido</a>
     <header class="site-header shell glass">
-      <a class="brand" href={`${blogRoot}/`} aria-label="SOMA, inicio del blog">
+      <a class="brand" href={blogHome} aria-label="SOMA, inicio del blog">
         <span class="monogram" aria-hidden="true">
           <svg viewBox="0 0 32 32"><path d="M5 17h5l3-6 4 11 3-5h7"></path></svg>
         </span>
         <span><strong>SOMA</strong><small>Expediente médico</small></span>
       </a>
       <nav class="primary-nav" aria-label="Navegación principal">
-        <a class="active" href={`${blogRoot}/`}>Guías</a>
-        <a href={`${blogRoot}/#rutas`}>Consulta privada</a>
-        <a href={`${blogRoot}/#articulos`}>Biblioteca</a>
+        <a class="active" href={blogHome}>Guías</a>
+        <a href={`${blogHome}#rutas`}>Consulta privada</a>
+        <a href={`${blogHome}#articulos`}>Biblioteca</a>
       </nav>
       <a class="header-cta" href="https://www.somahealth.com.mx">Ir a SOMA <span aria-hidden="true">↗</span></a>
     </header>
@@ -111,7 +112,7 @@ const schema = type === "article"
         <div><strong>SOMA</strong><p>Salud, tecnología y práctica clínica.</p></div>
       </div>
       <p class="disclaimer">Contenido informativo para profesionales de la salud en México. No sustituye el criterio médico ni asesoría regulatoria, legal o fiscal.</p>
-      <div class="footer-links"><a href={`${blogRoot}/`}>Blog</a><a href="https://www.somahealth.com.mx">Producto</a><span>© {new Date().getFullYear()}</span></div>
+      <div class="footer-links"><a href={blogHome}>Blog</a><a href="https://www.somahealth.com.mx">Producto</a><span>© {new Date().getFullYear()}</span></div>
     </footer>
   </body>
 </html>
