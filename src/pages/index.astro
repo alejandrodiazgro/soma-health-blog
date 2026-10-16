@@ -24,17 +24,39 @@ const link = (slug: string) => `${blogRoot}/${slug}`;
       </div>
       <p class="hero-note"><span aria-hidden="true">●</span> Contenido práctico, actualizado y enfocado en México.</p>
     </div>
-    <aside class="topic-panel glass" aria-label="Ruta recomendada para organizar la consulta">
-      <div class="panel-top"><span class="mini-logo" aria-hidden="true"><svg viewBox="0 0 32 32"><path d="M5 17h5l3-6 4 11 3-5h7"></path></svg></span><span>Ruta SOMA</span><small>5 etapas</small></div>
-      <ol>
-        <li><span>01</span><div><strong>Abre tu consulta</strong><small>Modelo, espacio y presupuesto</small></div></li>
-        <li><span>02</span><div><strong>Cumple los requisitos</strong><small>COFEPRIS y documentación</small></div></li>
-        <li><span>03</span><div><strong>Organiza el expediente</strong><small>Historia, notas y privacidad</small></div></li>
-        <li><span>04</span><div><strong>Digitaliza tu operación</strong><small>Agenda, receta y seguimiento</small></div></li>
-        <li><span>05</span><div><strong>Haz crecer tu práctica</strong><small>Pacientes y productividad</small></div></li>
-      </ol>
-      <a href={link("como-iniciar-consulta-privada-mexico")}>Ver la guía completa <span aria-hidden="true">→</span></a>
-    </aside>
+    <div class="device-stage" aria-hidden="true">
+      <div class="device-glow"></div>
+      <div class="tablet">
+        <span class="tablet-camera"></span>
+        <div class="tablet-screen">
+          <div class="tablet-bar">
+            <span class="mini-logo"><svg viewBox="0 0 32 32"><path d="M5 17h5l3-6 4 11 3-5h7"></path></svg></span>
+            <div><strong>SOMA</strong><small>Biblioteca médica</small></div>
+            <span class="tablet-pill">Guías</span>
+          </div>
+          <div class="tablet-heading"><small>PARA TU PRÁCTICA</small><strong>Temas para una consulta mejor organizada.</strong></div>
+          <div class="tablet-viewport">
+            <div class="tablet-track">
+              <div class="tablet-feed">
+                <article class="tablet-card featured"><span>CONSULTA PRIVADA</span><strong>Cómo iniciar una consulta médica privada en México</strong><small>Guía paso a paso →</small></article>
+                <article class="tablet-card"><span>SOFTWARE MÉDICO</span><strong>Cómo elegir un sistema para tu consultorio</strong><small>Expediente, agenda y receta</small></article>
+                <article class="tablet-card"><span>NORMATIVA</span><strong>Requisitos COFEPRIS para un consultorio</strong><small>Checklist inicial</small></article>
+                <article class="tablet-card"><span>EXPEDIENTE CLÍNICO</span><strong>NOM-004 explicada para médicos</strong><small>Documentación y seguimiento</small></article>
+                <article class="tablet-card"><span>IA Y PRODUCTIVIDAD</span><strong>Nota médica por voz</strong><small>Precisión, revisión y privacidad</small></article>
+              </div>
+              <div class="tablet-feed">
+                <article class="tablet-card featured"><span>CONSULTA PRIVADA</span><strong>Cómo iniciar una consulta médica privada en México</strong><small>Guía paso a paso →</small></article>
+                <article class="tablet-card"><span>SOFTWARE MÉDICO</span><strong>Cómo elegir un sistema para tu consultorio</strong><small>Expediente, agenda y receta</small></article>
+                <article class="tablet-card"><span>NORMATIVA</span><strong>Requisitos COFEPRIS para un consultorio</strong><small>Checklist inicial</small></article>
+                <article class="tablet-card"><span>EXPEDIENTE CLÍNICO</span><strong>NOM-004 explicada para médicos</strong><small>Documentación y seguimiento</small></article>
+                <article class="tablet-card"><span>IA Y PRODUCTIVIDAD</span><strong>Nota médica por voz</strong><small>Precisión, revisión y privacidad</small></article>
+              </div>
+            </div>
+          </div>
+          <div class="tablet-home"></div>
+        </div>
+      </div>
+    </div>
   </section>
 
   <section class="proof shell" aria-label="Principios editoriales">
@@ -114,18 +136,39 @@ const link = (slug: string) => `${blogRoot}/${slug}`;
   .hero-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 28px; }
   .hero-note { margin: 26px 0 0; color: var(--brand); font-size: 13px; font-weight: 600; }
   .hero-note span { margin-right: 7px; color: var(--accent); }
-  .topic-panel { padding: 20px; border-radius: 28px; }
-  .panel-top { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 9px; padding-bottom: 15px; border-bottom: 1px solid var(--line); font-size: 13px; font-weight: 600; }
-  .panel-top small { color: var(--muted); font-weight: 500; }
+  .device-stage { position: relative; display: grid; place-items: center; min-height: 570px; perspective: 1200px; }
+  .device-glow { position: absolute; width: 86%; height: 74%; border-radius: 50%; background: rgba(88,181,160,.24); filter: blur(55px); }
+  .tablet { position: relative; z-index: 1; width: min(100%, 410px); padding: 10px; border: 1px solid rgba(20,32,48,.4); border-radius: 38px; background: linear-gradient(145deg, #e8eeed 0%, #a8b3b2 45%, #f8faf9 100%); box-shadow: 0 0 0 2px rgba(255,255,255,.7), 0 35px 75px rgba(16,40,48,.26), 0 12px 24px rgba(16,40,48,.15); transform: rotateY(-4deg) rotateZ(1deg); }
+  .tablet::before, .tablet::after { content: ""; position: absolute; left: -3px; width: 3px; border-radius: 3px 0 0 3px; background: #879291; }
+  .tablet::before { top: 92px; height: 56px; }
+  .tablet::after { top: 165px; height: 34px; }
+  .tablet-camera { position: absolute; z-index: 3; top: 21px; left: 50%; width: 6px; height: 6px; border-radius: 50%; background: #253238; box-shadow: inset 0 0 0 1px #527177; transform: translateX(-50%); }
+  .tablet-screen { position: relative; height: 540px; overflow: hidden; border: 7px solid #172125; border-radius: 30px; background: linear-gradient(180deg, #eef5f3, #f8fbfa); }
+  .tablet-bar { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 8px; height: 62px; padding: 10px 13px; border-bottom: 1px solid rgba(20,32,48,.08); background: rgba(255,255,255,.78); }
   .mini-logo { display: grid; place-items: center; width: 29px; height: 29px; border-radius: 9px; background: var(--brand); color: white; }
   .mini-logo svg { width: 21px; fill: none; stroke: currentColor; stroke-width: 2.5; stroke-linecap: round; stroke-linejoin: round; }
-  .topic-panel ol { list-style: none; padding: 5px 0; margin: 0; }
-  .topic-panel li { display: grid; grid-template-columns: 30px 1fr; gap: 10px; align-items: center; padding: 13px 3px; border-bottom: 1px solid var(--line); }
-  .topic-panel li > span { color: var(--brand); font-size: 11px; font-weight: 700; }
-  .topic-panel li strong, .topic-panel li small { display: block; }
-  .topic-panel li strong { font-size: 14px; font-weight: 600; }
-  .topic-panel li small { margin-top: 1px; color: var(--muted); font-size: 11px; }
-  .topic-panel > a { display: flex; justify-content: space-between; padding: 14px 3px 2px; color: var(--brand); font-size: 13px; font-weight: 600; text-decoration: none; }
+  .tablet-bar div strong, .tablet-bar div small { display: block; line-height: 1.15; }
+  .tablet-bar div strong { font-family: Montserrat, Geist, sans-serif; font-size: 11px; font-weight: 800; }
+  .tablet-bar div small { color: var(--muted); font-size: 8px; }
+  .tablet-pill { padding: 5px 9px; border-radius: 999px; background: var(--brand-soft); color: var(--brand); font-size: 8px; font-weight: 700; }
+  .tablet-heading { padding: 18px 17px 13px; }
+  .tablet-heading small, .tablet-heading strong { display: block; }
+  .tablet-heading small { color: var(--brand); font-size: 8px; font-weight: 700; letter-spacing: .08em; }
+  .tablet-heading strong { max-width: 290px; margin-top: 5px; font-size: 20px; line-height: 1.08; letter-spacing: -.035em; }
+  .tablet-viewport { position: relative; height: 401px; overflow: hidden; padding: 0 13px; -webkit-mask-image: linear-gradient(to bottom, transparent 0, black 5%, black 92%, transparent 100%); mask-image: linear-gradient(to bottom, transparent 0, black 5%, black 92%, transparent 100%); }
+  .tablet-track { animation: tablet-scroll 22s linear infinite; }
+  .tablet:hover .tablet-track { animation-play-state: paused; }
+  .tablet-feed { display: grid; gap: 9px; padding: 8px 0; }
+  .tablet-card { display: flex; flex-direction: column; min-height: 112px; padding: 15px; border: 1px solid rgba(20,32,48,.07); border-radius: 15px; background: rgba(255,255,255,.9); box-shadow: 0 5px 16px rgba(16,40,48,.07); }
+  .tablet-card.featured { min-height: 145px; background: linear-gradient(145deg, #135650, #0e3f3b); color: white; }
+  .tablet-card span { color: var(--brand); font-size: 7px; font-weight: 700; letter-spacing: .06em; }
+  .tablet-card.featured span { color: #bfe4dc; }
+  .tablet-card strong { max-width: 290px; margin: auto 0 7px; font-size: 15px; line-height: 1.16; letter-spacing: -.02em; }
+  .tablet-card.featured strong { font-size: 19px; }
+  .tablet-card small { color: var(--muted); font-size: 9px; }
+  .tablet-card.featured small { color: rgba(255,255,255,.74); }
+  .tablet-home { position: absolute; z-index: 4; bottom: 7px; left: 50%; width: 70px; height: 3px; border-radius: 999px; background: rgba(20,32,48,.35); transform: translateX(-50%); }
+  @keyframes tablet-scroll { from { transform: translateY(0); } to { transform: translateY(-50%); } }
   .proof { display: grid; grid-template-columns: repeat(3, 1fr); margin-bottom: 110px; border-block: 1px solid var(--line); }
   .proof article { padding: 22px 26px; border-right: 1px solid var(--line); }
   .proof article:last-child { border-right: 0; }
@@ -171,5 +214,10 @@ const link = (slug: string) => `${blogRoot}/${slug}`;
     .route-card { min-height: 300px; padding: 23px; }
     .profiles { padding-block: 35px 85px; }
     .cta { align-items: flex-start; flex-direction: column; padding: 26px; }
+    .device-stage { min-height: 540px; }
+    .tablet { width: min(94%, 410px); transform: rotateZ(.5deg); }
+    .tablet-screen { height: 510px; }
+    .tablet-viewport { height: 371px; }
   }
+  @media (prefers-reduced-motion: reduce) { .tablet-track { animation: none; transform: translateY(0); } }
 </style>
